@@ -1,0 +1,43 @@
+{
+  "name": "genpark-contextual-memory-pruning-importance-attributor-skill",
+  "version": "1.0.0",
+  "description": "Autonomous Long-Horizon Agentic Memory Pruning & Importance Attributor. Evaluates multi-turn episodic memory buffers, calculates multi-factor salience scores (recency decay, user priority pinning, emotional valence, and entity graph connectivity), and deterministically prunes low-utility noise to respect model context limits.",
+  "tools": [
+    {
+      "name": "prune_agentic_memory",
+      "description": "Calculate episodic memory importance attribution scores, identify redundant or decayed context nodes, and prune memory buffers to target token constraints.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "attribute_memory_importance",
+              "prune_contextual_memories",
+              "get_memory_stats"
+            ],
+            "description": "Memory management action."
+          },
+          "memories": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "List of memory nodes with content, timestamp, is_pinned, access_count."
+          },
+          "target_token_budget": {
+            "type": "integer",
+            "description": "Max allowable token budget for retained memory."
+          },
+          "half_life_hours": {
+            "type": "number",
+            "description": "Exponential recency decay half-life in hours."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ]
+}
